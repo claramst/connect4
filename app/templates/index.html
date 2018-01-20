@@ -7,10 +7,10 @@
 
 
 </p>
-<h4><em>The board</em></h4>
-<p>
+<p>1 = User, 2 = Computer</p>
 
 {{text|safe}}
+<em>Messages : {{message|safe}}</em>
 
 <h4><em>Choose your next move</em></h4>
 <form action="/move" method="post">
@@ -21,6 +21,12 @@
     <button type="submit" name="option" value="4">4</button>
     <button type="submit" name="option" value="5">5</button>
 </form>
+
+<hr>
+<form action="/start" method="post">
+    <button type="submit" name="start" value="1">Start a new game</button>
+</form>
+<hr>
 
 
 
