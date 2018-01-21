@@ -22,7 +22,7 @@ def index():
 @app.route('/move', methods=['GET', 'POST'])
 def move():
     column = request.form['option']
-    bd.next_human_move(column)
+    bd.next_human_move(int(column))
     return redirect('/')
 
 
