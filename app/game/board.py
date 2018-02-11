@@ -10,7 +10,7 @@ N = 6
 the_board = np.zeros((N, N), dtype=np.int)
 the_message = ["no message"]
 the_game_is_over = [False]
-
+# this must be changed to true within a function to end game
 
 def get_board():
     """
@@ -36,7 +36,7 @@ def start_new_game():
     return
 
 
-def next_human_move(column):
+def next_human_move_and_computer(column):
     """
     Accept the next human move:
         1. Check move is valid
@@ -48,7 +48,7 @@ def next_human_move(column):
     """
     print("next human move = " + str(column))
 
-    if the_game_is_over[0]:
+    if the_game_is_over[0]:  # the_game_is_over's 0th value will have been changed
         the_message[0] = "The game is over"
         return
 
@@ -57,6 +57,10 @@ def next_human_move(column):
         return
 
     over, message = gameplay.make_human_move(the_board, column)
+    the_game_is_over[0] = over
+    the_message[0] = message
+
+    over, message = gameplay.make_computer_move(the_board)
     the_game_is_over[0] = over
     the_message[0] = message
     return

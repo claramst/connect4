@@ -6,8 +6,6 @@ import app.game.utilities as util
 import pandas as pd
 
 
-util.fill_example(bd.get_board())
-
 
 @app.route('/')
 @app.route('/index')
@@ -22,7 +20,7 @@ def index():
 @app.route('/move', methods=['GET', 'POST'])
 def move():
     column = request.form['option']
-    bd.next_human_move(int(column))
+    bd.next_human_move_and_computer(int(column))
     return redirect('/')
 
 
