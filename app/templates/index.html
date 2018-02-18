@@ -4,15 +4,55 @@
 
 <h1>4 in a row</h1>
 <p>
+    <canvas id="myCanvas" width="430" height="430"></canvas>
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var human = new Image();
+        human.src = 'static/woman64.png';
+        var robot = new Image();
+        robot.src = 'static/android64.png';
 
+        var n = 6;
+        var lineWidth = 1;
+        var hlw = lineWidth + 1;
+        var sp = 2;  // border around the gif
+        var cell = 64 + 2*hlw + 2+sp;
 
+        context.beginPath();
+        context.fillStyle = '#e0e0e0';
+        context.lineWidth = lineWidth;
+        context.strokeStyle = 'black';
+        for (i = 0; i < n; i++) {
+            for (j = 0; j < n; j++) {
+                context.rect(i*cell + hlw, j*cell + hlw, cell - 2*hlw, cell - 2*hlw);
+                context.fill();
+                context.stroke();
+            }
+        }
+
+        board = {{text}}
+        human.onload = function() {
+            for (i = 0; i < n*n; ++i) {
+                if (board[i] == 1) {
+                    x = (i % 6) * cell + hlw + sp;
+                    y = Math.floor(i / 6) * cell + hlw + sp;
+                    context.drawImage(human, x, y);
+                }
+            }
+        };
+        robot.onload = function() {
+            for (i = 0; i < n*n; ++i) {
+                if (board[i] == 2) {
+                    x = (i % 6) * cell + hlw + sp;
+                    y = Math.floor(i / 6) * cell + hlw + sp;
+                    context.drawImage(robot, x, y);
+                }
+            }
+        };
+    </script>
 </p>
-<p>1 = User, 2 = Computer</p>
-
-{{text|safe}}
-<em>Messages : {{message|safe}}</em>
-
-<h4><em>Choose your next move</em></h4>
+<em>Choose your next move</em>
 <form action="/move" method="post">
     <button type="submit" name="option" value="0">0</button>
     <button type="submit" name="option" value="1">1</button>
@@ -21,6 +61,8 @@
     <button type="submit" name="option" value="4">4</button>
     <button type="submit" name="option" value="5">5</button>
 </form>
+
+<em>Messages : {{message|safe}}</em>
 
 <hr>
 <form action="/start" method="post">

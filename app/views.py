@@ -2,9 +2,6 @@ from flask import render_template
 from flask import request, redirect
 from app import app
 import app.game.board as bd
-import app.game.utilities as util
-import pandas as pd
-
 
 
 @app.route('/')
@@ -12,9 +9,9 @@ import pandas as pd
 def index():
     board = bd.get_board()
     message = bd.get_message()
-    df = pd.DataFrame(board)
-    text = df.to_html(header=False, index=False)
-    return render_template('index.html', text=text, message=message, title='Home')
+    flat = board.flatten(order='C')
+    board_as_string = '[' + ','.join([str(i) for i in flat]) + ']'
+    return render_template('index.html', text=board_as_string   , message=message, title='Home')
 
 
 @app.route('/move', methods=['GET', 'POST'])
