@@ -56,3 +56,30 @@ def make_computer_move(board):
         the_message = "Your turn"
         over = False
         return over, the_message
+
+
+def max_length_for_player(board, player):
+    directions = [[0, 1], [-1, 1], [-1, 0], [-1, -1]]
+    length = 0
+    for c in range(6):
+        for r in range(6):
+            if board[r, c] != player:
+                continue
+            length = max(length, 1)
+            for d in directions:
+                for step in range(1,4):
+                    row = r + step * d[0]
+                    col = c + step * d[1]
+                    if not in_board(row, col):  # same is checking if boundary_check returns False
+                        break
+                    if board[row,col] != player:
+                        break
+                    length = max(length, step + 1)
+    return length
+
+def in_board(row,column):
+    if row >=6 or row<0:
+        return False
+    if column >=6 or column<0:
+        return False
+    return True

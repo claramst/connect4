@@ -6,6 +6,8 @@ import app.game.gameplay as gameplay
 
 # Global variables initialized at startup
 # Note that the board contains integer values: 0=empty, 1=human, 2=computer
+HUMAN = 1
+COMPUTER = 2
 N = 6
 the_board = np.zeros((N, N), dtype=np.int)
 the_message = ["no message"]
@@ -59,9 +61,16 @@ def next_human_move_and_computer(column):
     over, message = gameplay.make_human_move(the_board, column)
     the_game_is_over[0] = over
     the_message[0] = message
+    if 4 == gameplay.max_length_for_player(the_board, HUMAN):
+        the_game_is_over[0] = True
+        the_message[0] = "human wins, yay"
+        return
 
     over, message = gameplay.make_computer_move(the_board)
     the_game_is_over[0] = over
     the_message[0] = message
+    if 4 == gameplay.max_length_for_player(the_board, COMPUTER):
+        the_game_is_over[0] = True
+        the_message[0] = "computer wins, yay"
     return
 
