@@ -40,12 +40,15 @@ def make_human_move(board, column):
 
 
 def make_computer_move(board):
-    empty = []
-    for c in range(6):
-        if board[0, c] == 0:
-            empty.append(c)
-    r = random.randint(0, len(empty)-1) # for randint end points included
-    column = empty[r]
+    column = check_if_winning_move(board)
+    if column is None:
+        empty = []
+        for c in range(6):
+            if board[0, c] == 0:
+                empty.append(c)
+        r = random.randint(0, len(empty)-1) # for randint end points included
+        column = empty[r]
+
     print("next computer move = " + str(column))
 
     row = first_empty_cell_in_column(board, column)
@@ -77,9 +80,26 @@ def max_length_for_player(board, player):
                     length = max(length, step + 1)
     return length
 
+
 def in_board(row,column):
-    if row >=6 or row<0:
+    if row >= 6 or row < 0:
         return False
-    if column >=6 or column<0:
+    if column >= 6 or column < 0:
         return False
     return True
+
+
+def check_if_winning_move(board):
+    for cc in range(6):
+        fake = board.copy()  # must have brackets, otherwise it returns the function, not the variable. (
+        rr = first_empty_cell_in_column(board,cc)
+        if rr < 0:
+            continue
+        print ("yo" + str(rr) + str(cc))
+        fake[rr, cc] = 1
+        if 4 == max_length_for_player(fake, 1):
+            print("found winning move"+str(cc))
+            return cc
+
+    return None
+
